@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Fuyi-huang1.GitHub.io by Fuyi-Huang</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Fuyi-huang1.GitHub.io</h1>
+      <h2 class="project-tagline">About how to compile and execute c or c++</h2>
+      <a href="https://github.com/Fuyi-Huang/Fuyi-Huang1.github.io" class="btn">View on GitHub</a>
+      <a href="https://github.com/Fuyi-Huang/Fuyi-Huang1.github.io/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/Fuyi-Huang/Fuyi-Huang1.github.io/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h3>
+<a id="总体流程" class="anchor" href="#%E6%80%BB%E4%BD%93%E6%B5%81%E7%A8%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>总体流程</h3>
+
+<p>1.下载安装vscode</p>
+
+<p>2.安装cpptools</p>
+
+<p>3.安装编译环境</p>
+
+<p>4.修改vscode调试配置文件</p>
+
+<h3>
+<a id="下载安装vscode" class="anchor" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85vscode" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>下载安装vscode</h3>
+
+<p><a href="http://code.visualstudio.com">http://code.visualstudio.com</a></p>
+
+<h3>
+<a id="安装cpptools" class="anchor" href="#%E5%AE%89%E8%A3%85cpptools" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>安装cpptools</h3>
+
+<p>打开你的vscode，按ctrl + e，输入：</p>
+
+<p>ext install cpptools</p>
+
+<p>然后vscode就会联网搜索查找插件列表，然后选择一个评价高的下载安装就好，安装好之后vscode会提示重启，重启即可。</p>
+
+<h3>
+<a id="安装编译调试环境" class="anchor" href="#%E5%AE%89%E8%A3%85%E7%BC%96%E8%AF%91%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>安装编译调试环境</h3>
+
+<p>目前windows下调试仅支持 Cygwin 和 MinGW。 </p>
+
+<p>我电脑里有安装有MinGW，没有的话上网下一个安装就好。</p>
+
+<p>安装好之后进入MinGW，然后注意一下gdb一定要选上，否则无法调试</p>
+
+<p><img alt=""></p>
+
+<p>选中之后右键Make for Installation进行标记，其中gcc和g++为c和c++编译器。</p>
+
+<p>然后配置系统环境变量path，这一步是必须的。</p>
+
+<p>在 我的电脑 上右键属性：</p>
+
+<p>然后做如下操作：</p>
+
+<p><img alt=""></p>
+
+<h3>
+<a id="修改vscode调试配置文件" class="anchor" href="#%E4%BF%AE%E6%94%B9vscode%E8%B0%83%E8%AF%95%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>修改vscode调试配置文件</h3>
+
+<p>打开vscode，*<em>注意配置系统环境变量path后重启一下vscode *</em></p>
+
+<p>注意vscode调试需要在打开的文件夹中进行</p>
+
+<p>打开文件夹后，新建test.cpp进行输入代码测试： </p>
+
+<p>如图示进入调试界面选择C++：</p>
+
+<p><img alt=""></p>
+
+<p><img alt=""></p>
+
+<p>然后会在工作目录下的生成一个launch.json的启动配置文件: </p>
+
+<p><img alt=""></p>
+
+<p>使用下面代码替换该文件：</p>
+
+<p>`
+{</p>
+
+<pre><code>"version": "0.2.0",
+
+"configurations": [
+
+    {
+
+        "name": "C++ Launch (GDB)",                 // 配置名称，将会在启动配置的下拉菜单中显示
+
+        "type": "cppdbg",                           // 配置类型，这里只能为cppdbg
+
+        "request": "launch",                        // 请求配置类型，可以为launch（启动）或attach（附加）
+
+        "launchOptionType": "Local",                // 调试器启动类型，这里只能为Local
+
+        "targetArchitecture": "x86",                // 生成目标架构，一般为x86或x64，可以为x86, arm, arm64, mips, x64, amd64, x86_64
+
+        "program": "${file}.exe",                   // 将要进行调试的程序的路径
+
+        "miDebuggerPath":"a:\\MinGW\\bin\\gdb.exe", // miDebugger的路径，注意这里要与MinGw的路径对应
+
+        "args": ["blackkitty",  "1221", "# #"],     // 程序调试时传递给程序的命令行参数，一般设为空即可
+
+        "stopAtEntry": false,                       // 设为true时程序将暂停在程序入口处，一般设置为false
+
+        "cwd": "${workspaceRoot}",                  // 调试程序时的工作目录，一般为${workspaceRoot}即代码所在目录
+
+        "externalConsole": true,                    // 调试时是否显示控制台窗口，一般设置为true显示控制台
+
+        "preLaunchTask": "g++"　　                  // 调试会话开始前执行的任务，一般为编译程序，c++为g++, c为gcc
+
+    }
+
+]
+</code></pre>
+
+<p>}
+`</p>
+
+<p>这里要*<em>注意miDebuggerPath要与MinGw的路径对应 *</em></p>
+
+<p>替换后保存，然后切换至test.cpp，按F5进行调试，此时会弹出一个信息框要求你配置任务运行程序，点击它~ </p>
+
+<p><img alt=""></p>
+
+<p>在这里随便选一个：<strong>这里选择MSBuild的话，你就可以按F5的时候顺便执行生成的程序。</strong></p>
+
+<p><img alt=""></p>
+
+<p>然后用下面代码替换：</p>
+
+<p>`
+{</p>
+
+<pre><code>"version": "0.1.0",
+
+"command": "g++",
+
+"args": ["-g","${file}","-o","${file}.exe"],    // 编译命令参数
+
+"problemMatcher": {
+
+    "owner": "cpp",
+
+    "fileLocation": ["relative", "${workspaceRoot}"],
+
+    "pattern": {
+
+        "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+
+        "file": 1,
+
+        "line": 2,
+
+        "column": 3,
+
+        "severity": 4,
+
+        "message": 5
+
+    }
+
+}
+</code></pre>
+
+<p>}
+`
+保存一下，然后切换至test.cpp，再次按F5启动调试~ </p>
+
+<p><img alt=""></p>
+
+<p>撒花!</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/Fuyi-Huang/Fuyi-Huang1.github.io">Fuyi-huang1.GitHub.io</a> is maintained by <a href="https://github.com/Fuyi-Huang">Fuyi-Huang</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
